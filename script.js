@@ -1,3 +1,26 @@
+// Инициализация TonConnect UI
+const ui = new TonConnectUI.TonConnectUI({
+  manifestUrl: 'https://your-domain.com/manifest.json' // опционально
+});
+
+// Кнопка “Подключить кошелёк”
+const connectBtn = document.createElement('button');
+connectBtn.textContent = 'Подключить TON-кошелёк';
+document.querySelector('.container').prepend(connectBtn);
+
+let wallet;
+
+connectBtn.addEventListener('click', async () => {
+  try {
+    const state = await ui.connect();
+    wallet = state.account; // содержит address и др.
+    connectBtn.textContent = `Кошелёк: ${wallet.address.slice(0, 6)}…`;
+  } catch (err) {
+    console.error('Ошибка подключения', err);
+  }
+});
+
+
 const formState = {
     title: '',
     description: '',

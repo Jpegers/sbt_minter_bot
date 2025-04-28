@@ -444,6 +444,20 @@ document.getElementById('main-photo').addEventListener('change', function () {
     } else {
       console.warn('Telegram.WebApp API not available');
     }
+
+      // Получаем все поля ввода, которые нужно “блюрить”
+const inputs = document.querySelectorAll('input, textarea, select');
+
+document.addEventListener('click', (e) => {
+  // Если цель клика — не одно из полей
+  if (![...inputs].some(el => el.contains(e.target))) {
+    // уходим из фокуса у активного поля
+    if (document.activeElement) {
+      document.activeElement.blur();
+    }
+  }
+});
+
   });
   
   

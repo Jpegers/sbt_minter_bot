@@ -36,6 +36,12 @@ button:disabled {
   cursor: not-allowed;
 }
 
+.container {
+  width: 100%;
+  box-sizing: border-box; /* чтобы padding не “вылезал” за границы */
+  margin: 0;
+}
+
 .screen {
   display: none;
   padding: 20px;

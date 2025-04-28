@@ -301,10 +301,6 @@ input[type="file"] {
   background-color: #444;
 }
 
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-}
 
 .centered-buttons {
   max-width: 480px;

@@ -20,6 +20,59 @@ connectBtn.addEventListener('click', async () => {
   }
 });
 
+const nameInput      = document.getElementById('sbtName');
+const symbolInput    = document.getElementById('sbtSymbol');
+const recipientInput = document.getElementById('sbtRecipient');
+const mintButtonApp  = document.getElementById('mintButton');
+
+// helper: проверяем, все ли поля заполнены
+function allFilled() {
+  return [nameInput, symbolInput, recipientInput]
+    .every(i => i.value.trim().length > 0);
+}
+
+// Показываем Telegram MainButton, когда всё готово
+[nameInput, symbolInput, recipientInput].forEach(input => {
+  input.addEventListener('input', () => {
+    if (allFilled()) {
+      tg.MainButton.setText('Минтить SBT');
+      tg.MainButton.show();
+    } else {
+      tg.MainButton.hide();
+    }
+  });
+});
+
+// Локальная кнопка, если хотите
+mintButtonApp.addEventListener('click', () => {
+  if (!allFilled()) return;
+  startMint();
+});
+
+// Нативная кнопка Telegram
+tg.onEvent('mainButtonClicked', startMint);
+
+async function startMint() {
+  if (!wallet) {
+    alert('Сначала подключите кошелёк');
+    return;
+  }
+
+  const payload = {
+    action:   'mint',
+    name:     nameInput.value.trim(),
+    symbol:   symbolInput.value.trim(),
+    recipient:recipientInput.value.trim(),
+    wallet:   wallet.address,
+  };
+
+  // отправляем данные боту
+  tg.sendData(JSON.stringify(payload));
+
+  // опционально: закрыть WebApp
+  // tg.close();
+}
+
 
 const formState = {
     title: '',
